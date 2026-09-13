@@ -1,0 +1,34 @@
+====================================================================
+AI ASSISTANT DEVELOPMENT LOG
+Project: Buy or Wait? AI-Powered Financial Decision Agent
+Developer: Sapna Rani
+Date: September 13, 2026
+====================================================================
+
+[DEVELOPMENT PHASE 1: Data Pipeline & Preprocessing]
+USER: Shared requirements for the "Buy or Wait" HackerRank challenge. Required merging 8 datasets and normalizing currencies using exchange rates.
+AI: Provided Pandas code to join datasets (requests, financial_profiles, financial_events) and apply exchange rate math to standardize all amounts to the user's home currency.
+
+[DEVELOPMENT PHASE 2: OCR Integration Strategy]
+USER: Needed to extract transaction amounts from 16 missing images, but faced 429 RESOURCE_EXHAUSTED errors on the free-tier Gemini API.
+AI: Advised a hybrid strategy: Use `gemini-3.6-flash` via the `google-genai` SDK to process the first 11 images successfully, and implement a manual data-entry fallback for the remaining 5 to bypass the rate limit and complete the dataset.
+
+[DEVELOPMENT PHASE 3: Core Simulation Engine]
+USER: Prompted for the 90-day cash flow simulation logic.
+AI: Generated `get_daily_baseline_balance()` to forecast daily balances based on current balances, recurring intervals, and historical events. Added logic to exclude pending credits but reserve funds for pending debits, ensuring the balance never drops below `minimum_balance_to_keep`.
+
+[DEVELOPMENT PHASE 4: Plan Evaluation & Tie-Breakers]
+USER: Needed to evaluate full, partial, and installment payment methods against the 90-day safety baseline.
+AI: Generated the `is_plan_safe()` checker. Built the main evaluation loop to rank valid candidates based on the strict prompt criteria (on-time completion -> lowest total cost -> earliest start -> fewest payments -> lowest option ID).
+
+[DEVELOPMENT PHASE 5: Debugging & Refinement]
+USER: Encountered a `KeyError: 'available_balance'`.
+AI: Identified a column name mismatch. Corrected code to use `current_available_balance`.
+USER: Encountered a `KeyError: 'payment_start_date'`.
+AI: Mapped column names to match the dataset (`first_payment_date`, `payment_frequency_days`, `total_payable_amount`).
+USER: Encountered `ValueError: cannot convert float NaN to integer`.
+AI: Diagnosed that single-payment installments had a blank (NaN) frequency. Added a safety check to default NaN intervals to 0. 
+
+[DEVELOPMENT PHASE 6: Final Execution & Packaging]
+USER: Successfully ran the evaluation loop on all 250 requests.
+AI: Assisted in generating the final `output.csv`, drafting the required `usage_report.md` for token counting, creating the `README.md`, and organizing the final `code.zip` structure per HackerRank specifications.
